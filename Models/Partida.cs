@@ -1,0 +1,2 @@
+namespace TP06.Models;
+

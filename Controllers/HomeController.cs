@@ -17,6 +17,27 @@ public class HomeController : Controller
     {
         return View();
     }
+    
+    [HttpPost]
+
+    public IActionResult Comenzar(string nombre)
+    {
+        if (nombre == null || nombre == "")
+        {
+            ViewBag.Error = "Tenés que ingresar tu nombre";
+            return View("Index");
+        }
+
+        BD.CrearPartida(nombre);
+
+        int partida = BD.ObtenerUltimaPartida(nombre);
+
+        HttpContext.Session.SetInt32("PartidaId", partida);
+        HttpContext.Session.SetString("Nombre", nombre);
+
+        return RedirectToAction("Sala", "Juego", new { id = 1 });
+    }
+}
 
     public IActionResult Privacy()
     {
@@ -28,4 +49,3 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-}

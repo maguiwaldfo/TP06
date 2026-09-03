@@ -1,15 +1,104 @@
 @model TP06.Models.Sala
 
-<h1>@Model.Nombre</h1>
+@{
+    ViewData["Title"] = "Sala";
+}
 
-<p>@Model.Descripcion</p>
+<div>
 
-<form method="post" asp-controller="Juego" asp-action="EnviarRespuesta">
+    <h2>SALA @Model.Orden</h2>
 
-    <input type="hidden" name="idSala" value="@Model.Id" />
+    <h1>@Model.Nombre</h1>
 
-    <input type="text" name="respuesta" placeholder="Ingresá la respuesta" />
+    <h3>Historia</h3>
 
-    <button type="submit">Enviar</button>
+    <p>
+        @Model.Descripcion
+    </p>
 
-</form>
+
+    @if (Model.Orden == 1)
+    {
+        <h3>Investigá la habitación</h3>
+
+        <p>Teléfono</p>
+        <p>Fotos</p>
+        <p>Cuaderno</p>
+        <p>Candado</p>
+        <p>Vela</p>
+    }
+
+    @if (Model.Orden == 2)
+    {
+        <h3>Investigá los mensajes</h3>
+
+        <p>Celular</p>
+        <p>Mensajes de A</p>
+        <p>Números escondidos</p>
+    }
+
+    @if (Model.Orden == 3)
+    {
+        <h3>Investigá la habitación de Alison</h3>
+
+        <p>Muñeca</p>
+        <p>Diario</p>
+        <p>Fotos</p>
+        <p>Espejo</p>
+        <p>Caja</p>
+    }
+
+    @if (Model.Orden == 4)
+    {
+        <h3>Investigá las pistas</h3>
+
+        <p>Fotografías</p>
+        <p>Fechas</p>
+        <p>Lugares</p>
+        <p>Pistas</p>
+    }
+
+    @if (Model.Orden == 5)
+    {
+        <h3>El juego final</h3>
+
+        <p>
+            Recordá todo lo que descubriste en las habitaciones anteriores.
+        </p>
+
+        <p>Ingresá el código final.</p>
+    }
+
+
+    <h3>Ingresá la clave</h3>
+
+    <form asp-controller="Juego"
+          asp-action="EnviarRespuesta"
+          method="post">
+
+        <input type="hidden"
+               name="idSala"
+               value="@Model.Id" />
+
+        <input type="text"
+               name="respuesta"
+               placeholder="Clave..." />
+
+        <button type="submit">
+            ENVIAR
+        </button>
+
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <p>@ViewBag.Error</p>
+    }
+
+    <br />
+
+    <button type="button">
+        PEDIR PISTA
+    </button>
+
+</div>

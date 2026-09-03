@@ -1,8 +1,43 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+
+@{
+    ViewData["Title"] = "Can u escApe?";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+
+    <h1>CAN U ESCAPE?</h1>
+
+    <p>
+        A está de vuelta.
+        ¿Podrás escapar?
+    </p>
+
+    <form asp-controller="Home" asp-action="Comenzar" method="post">
+
+        <input type="text"
+               name="nombre"
+               placeholder="Ingresá tu nombre" />
+
+        <button type="submit">
+            COMENZAR
+        </button>
+
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <p>@ViewBag.Error</p>
+    }
+
+    <br />
+
+    <a asp-controller="Home" asp-action="Historia">
+        Historia
+    </a>
+
+    <a asp-controller="Home" asp-action="Integrantes">
+        Integrantes
+    </a>
+
 </div>

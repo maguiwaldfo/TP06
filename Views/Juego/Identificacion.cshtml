@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Identificación";
+}
+
+<h1>IDENTIFICACIÓN</h1>
+
+<p>Antes de comenzar, A necesita saber quién está jugando...</p>
+
+<form asp-controller="Juego" asp-action="Comenzar" method="post">
+
+    <label>Nombre:</label>
+
+    <input type="text"
+           name="nombre"
+           placeholder="Ingresá tu nombre" />
+
+    <button type="submit">
+        CONTINUAR
+    </button>
+
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <p>@ViewBag.Error</p>
+}

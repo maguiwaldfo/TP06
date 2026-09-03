@@ -17,6 +17,12 @@ public class JuegoController : Controller
 
         return View(sala);
     }
+    public IActionResult Identificacion()
+    {
+
+    return View();
+    
+    }
 
     [HttpPost]
     public IActionResult EnviarRespuesta(int idSala, string respuesta)

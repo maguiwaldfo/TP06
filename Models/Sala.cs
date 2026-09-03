@@ -2,9 +2,9 @@ namespace TP06.Models;
 
 public class Sala
 {
-    public int IdSala { get; set; }
-    public string NombreSala { get; set; } = string.Empty;
+    public int Id { get; set; }
+    public string Nombre { get; set; }
     public int Orden { get; set; }
-    public string Descripcion { get; set; } = string.Empty;
-    public string RespuestaEsperada { get; set; } = string.Empty;
+    public string Descripcion { get; set; }
+    public string Respuesta { get; set; }
 }

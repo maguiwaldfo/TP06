@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<TP06.Data.BD>();
+
 
 var app = builder.Build();
 

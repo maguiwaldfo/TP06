@@ -1,4 +1,3 @@
-
 using Dapper;
 using Microsoft.Data.SqlClient;
 using TP06.Models;
@@ -6,14 +5,23 @@ using TP06.Models;
 public static class BD
 {
     private static string _connectionString =
-        @"Server=localhost;Database=TP06;Trusted_Connection=True;TrustServerCertificate=True;";
+        @"Server=localhost;Database=Sala;Trusted_Connection=True;TrustServerCertificate=True;";
 
 
     public static List<Sala> ObtenerSalas()
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT * FROM Salas ORDER BY Orden";
+            string sql = @"
+                SELECT
+                    idSala AS Id,
+                    nombreSala AS Nombre,
+                    orden AS Orden,
+                    descripcion AS Descripcion,
+                    respuestaEsperada AS Respuesta,
+                    imagenes AS Imagenes
+                FROM [dbo].[salas]
+                ORDER BY orden";
 
             return connection.Query<Sala>(sql).ToList();
         }
@@ -24,7 +32,16 @@ public static class BD
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT * FROM Salas WHERE Id = @idSala";
+            string sql = @"
+                SELECT
+                    idSala AS Id,
+                    nombreSala AS Nombre,
+                    orden AS Orden,
+                    descripcion AS Descripcion,
+                    respuestaEsperada AS Respuesta,
+                    imagenes AS Imagenes
+                FROM [dbo].[salas]
+                WHERE idSala = @idSala";
 
             return connection.QueryFirstOrDefault<Sala>(
                 sql,
@@ -39,10 +56,14 @@ public static class BD
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sql = @"
-                SELECT *
-                FROM Pistas
-                WHERE IdSala = @idSala
-                ORDER BY NumeroPista";
+                SELECT
+                    idPista AS IdPista,
+                    idSala AS IdSala,
+                    numeroPista AS NumeroPista,
+                    texto AS Texto
+                FROM [dbo].[pista]
+                WHERE idSala = @idSala
+                ORDER BY numeroPista";
 
             return connection.Query<Pista>(
                 sql,
@@ -51,23 +72,61 @@ public static class BD
         }
     }
 
+    public static int ObtenerNuevoIdPartida()
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string sql = @"
+                SELECT ISNULL(MAX(idPartida), 0) + 1
+                FROM [dbo].[partida]";
+
+            return connection.QueryFirstOrDefault<int>(sql);
+        }
+    }
+
 
     public static void CrearPartida(string nombre)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
+            int nuevoId = ObtenerNuevoIdPartida();
+
             string sql = @"
-                INSERT INTO Partidas
-                (Nombre, Inicio, Vidas, Fin, Gano)
+                INSERT INTO [dbo].[partida]
+                (
+                    idPartida,
+                    nombreParticipante,
+                    inicio,
+                    fin,
+                    salaActual,
+                    vidasRestantes,
+                    finalizado,
+                    gano
+                )
                 VALUES
-                (@nombre, @inicio, 3, 0, 0)";
+                (
+                    @idPartida,
+                    @nombre,
+                    @inicio,
+                    @fin,
+                    @salaActual,
+                    @vidas,
+                    @finalizado,
+                    @gano
+                )";
 
             connection.Execute(
                 sql,
                 new
                 {
+                    idPartida = nuevoId,
                     nombre = nombre,
-                    inicio = DateTime.Now
+                    inicio = DateTime.Now,
+                    fin = DateTime.Now,
+                    salaActual = 1,
+                    vidas = 3,
+                    finalizado = false,
+                    gano = false
                 }
             );
         }
@@ -79,10 +138,16 @@ public static class BD
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sql = @"
-                SELECT TOP 1 *
-                FROM Partidas
-                WHERE Nombre = @nombre
-                ORDER BY Id DESC";
+                SELECT TOP 1
+                    idPartida AS IdPartida,
+                    nombreParticipante AS Nombre,
+                    inicio AS Inicio,
+                    vidasRestantes AS Vidas,
+                    finalizado AS Fin,
+                    gano AS Gano
+                FROM [dbo].[partida]
+                WHERE nombreParticipante = @nombre
+                ORDER BY idPartida DESC";
 
             return connection.QueryFirstOrDefault<Partida>(
                 sql,
@@ -97,9 +162,15 @@ public static class BD
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sql = @"
-                SELECT *
-                FROM Partidas
-                WHERE Id = @idPartida";
+                SELECT
+                    idPartida AS IdPartida,
+                    nombreParticipante AS Nombre,
+                    inicio AS Inicio,
+                    vidasRestantes AS Vidas,
+                    finalizado AS Fin,
+                    gano AS Gano
+                FROM [dbo].[partida]
+                WHERE idPartida = @idPartida";
 
             return connection.QueryFirstOrDefault<Partida>(
                 sql,
@@ -108,15 +179,16 @@ public static class BD
         }
     }
 
+
     public static void GuardarRespuesta(Respuesta respuesta)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sql = @"
-                INSERT INTO Respuestas
-                (IdPartida, IdSala, Intento, Correcta)
+                INSERT INTO [dbo].[respuestas]
+                (idRespuesta, idPartida, idSala, intento, esCorrecto)
                 VALUES
-                (@IdPartida, @IdSala, @Intento, @Correcta)";
+                (@IdRespuesta, @IdPartida, @IdSala, @Intento, @EsCorrecto)";
 
             connection.Execute(sql, respuesta);
         }
@@ -128,9 +200,9 @@ public static class BD
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sql = @"
-                UPDATE Partidas
-                SET Vidas = Vidas - 1
-                WHERE Id = @idPartida";
+                UPDATE [dbo].[partida]
+                SET vidasRestantes = vidasRestantes - 1
+                WHERE idPartida = @idPartida";
 
             connection.Execute(
                 sql,
@@ -140,20 +212,45 @@ public static class BD
     }
 
 
+    public static void ActualizarSalaActual(int idPartida, int idSala)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string sql = @"
+                UPDATE [dbo].[partida]
+                SET salaActual = @idSala
+                WHERE idPartida = @idPartida";
+
+            connection.Execute(
+                sql,
+                new
+                {
+                    idPartida,
+                    idSala
+                }
+            );
+        }
+    }
+
 
     public static void GanarPartida(int idPartida)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sql = @"
-                UPDATE Partidas
-                SET Fin = 1,
-                    Gano = 1
-                WHERE Id = @idPartida";
+                UPDATE [dbo].[partida]
+                SET fin = @fin,
+                    finalizado = 1,
+                    gano = 1
+                WHERE idPartida = @idPartida";
 
             connection.Execute(
                 sql,
-                new { idPartida }
+                new
+                {
+                    idPartida,
+                    fin = DateTime.Now
+                }
             );
         }
     }
@@ -164,14 +261,19 @@ public static class BD
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string sql = @"
-                UPDATE Partidas
-                SET Fin = 1,
-                Gano = 0
-                WHERE Id = @idPartida";
+                UPDATE [dbo].[partida]
+                SET fin = @fin,
+                    finalizado = 1,
+                    gano = 0
+                WHERE idPartida = @idPartida";
 
             connection.Execute(
                 sql,
-                new { idPartida }
+                new
+                {
+                    idPartida,
+                    fin = DateTime.Now
+                }
             );
         }
     }

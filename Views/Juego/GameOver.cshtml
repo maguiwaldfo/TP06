@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Game Over";
+}
+
+<div>
+
+    <h1>GAME OVER</h1>
+
+    <h2>A WON.</h2>
+
+    <p>
+        No lograste escapar esta vez.
+    </p>
+
+    <p>
+        A todavía tiene el control.
+    </p>
+
+    <a asp-controller="Juego"
+       asp-action="Identificacion">
+        TRY AGAIN
+    </a>
+
+    <br />
+    <br />
+
+    <a asp-controller="Home"
+       asp-action="Index">
+        Volver al inicio
+    </a>
+
+</div>

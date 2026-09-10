@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using TP06.Data;
 using TP06.Models;
 
 namespace TP06.Controllers;
@@ -17,11 +16,15 @@ public class JuegoController : Controller
 
         return View(sala);
     }
+
     public IActionResult Identificacion()
     {
+        return View();
+    }
 
-    return View();
-    
+    public IActionResult GameOver()
+    {
+        return View();
     }
 
     [HttpPost]
@@ -29,7 +32,12 @@ public class JuegoController : Controller
     {
         Sala sala = BD.ObtenerSala(idSala);
 
-        if (respuesta == sala.Respuesta)
+        if (sala == null)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        if (!string.IsNullOrEmpty(respuesta) && respuesta == sala.Respuesta)
         {
             return RedirectToAction("Sala", new { id = idSala + 1 });
         }

@@ -4,64 +4,73 @@
     ViewData["Title"] = "Sala";
 }
 
-<div>
+<div class="sala-page">
+    <header class="sala-header">
+        <h2>SALA @Model.Orden</h2>
+        <h1>@Model.Nombre</h1>
+    </header>
 
-    <h2>SALA @Model.Orden</h2>
+    <div class="sala-hero">
+        <section class="sala-texto">
+            <h3>Historia</h3>
+            <p class="sala-descripcion">
+                @Model.Descripcion
+            </p>
+        </section>
 
-    <h1>@Model.Nombre</h1>
-
-    <h3>Historia</h3>
-
-    <p>
-        @Model.Descripcion
-    </p>
-
+    <img src="~/Imagenes/@Model.Imagenes"
+     alt="@Model.Nombre"
+     class="imagenSala" />
+    </div>
 
     @if (Model.Orden == 1)
     {
         <h3>Investigá la habitación</h3>
-
-        <p>Teléfono</p>
-        <p>Fotos</p>
-        <p>Cuaderno</p>
-        <p>Candado</p>
-        <p>Vela</p>
+        <ul class="sala-list">
+            <li class="sala-item">Teléfono</li>
+            <li class="sala-item">Fotos</li>
+            <li class="sala-item">Cuaderno</li>
+            <li class="sala-item">Candado</li>
+            <li class="sala-item">Vela</li>
+        </ul>
     }
 
     @if (Model.Orden == 2)
     {
         <h3>Investigá los mensajes</h3>
-
-        <p>Celular</p>
-        <p>Mensajes de A</p>
-        <p>Números escondidos</p>
+        <ul class="sala-list">
+            <li class="sala-item">Celular</li>
+            <li class="sala-item">Mensajes de A</li>
+            <li class="sala-item">Números escondidos</li>
+        </ul>
     }
 
     @if (Model.Orden == 3)
     {
         <h3>Investigá la habitación de Alison</h3>
-
-        <p>Muñeca</p>
-        <p>Diario</p>
-        <p>Fotos</p>
-        <p>Espejo</p>
-        <p>Caja</p>
+        <ul class="sala-list">
+            <li class="sala-item">Muñeca</li>
+            <li class="sala-item">Diario</li>
+            <li class="sala-item">Fotos</li>
+            <li class="sala-item">Espejo</li>
+            <li class="sala-item">Caja</li>
+        </ul>
     }
 
     @if (Model.Orden == 4)
     {
         <h3>Investigá las pistas</h3>
-
-        <p>Fotografías</p>
-        <p>Fechas</p>
-        <p>Lugares</p>
-        <p>Pistas</p>
+        <ul class="sala-list">
+            <li class="sala-item">Fotografías</li>
+            <li class="sala-item">Fechas</li>
+            <li class="sala-item">Lugares</li>
+            <li class="sala-item">Pistas</li>
+        </ul>
     }
 
     @if (Model.Orden == 5)
     {
         <h3>El juego final</h3>
-
         <p>
             Recordá todo lo que descubriste en las habitaciones anteriores.
         </p>
@@ -69,12 +78,12 @@
         <p>Ingresá el código final.</p>
     }
 
-
     <h3>Ingresá la clave</h3>
 
     <form asp-controller="Juego"
           asp-action="EnviarRespuesta"
-          method="post">
+          method="post"
+          class="sala-form">
 
         <input type="hidden"
                name="idSala"
@@ -84,7 +93,7 @@
                name="respuesta"
                placeholder="Clave..." />
 
-        <button type="submit">
+        <button type="submit" class="btn-sala btn-primary-sala">
             ENVIAR
         </button>
 
@@ -92,13 +101,22 @@
 
     @if (ViewBag.Error != null)
     {
-        <p>@ViewBag.Error</p>
+        <p class="error-message">@ViewBag.Error</p>
     }
 
     <br />
 
-    <button type="button">
-        PEDIR PISTA
-    </button>
+   <a asp-controller="Juego"
+   asp-action="PedirPista"
+   asp-route-idSala="@Model.Id"
+   class="btn-sala btn-pista">
+    PEDIR PISTA
+</a>
 
+@if (ViewBag.Pista != null)
+{
+    <p class="pista-mensaje">
+        @ViewBag.Pista
+    </p>
+}
 </div>

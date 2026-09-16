@@ -26,23 +26,59 @@ public class JuegoController : Controller
     {
         return View();
     }
+ [HttpPost]
+public IActionResult EnviarRespuesta(int idSala, string respuesta)
+{
+    Sala sala = BD.ObtenerSala(idSala);
 
-    [HttpPost]
-    public IActionResult EnviarRespuesta(int idSala, string respuesta)
+    int idPartida = HttpContext.Session.GetInt32("PartidaId").Value;
+
+    Partida partida = BD.ObtenerPartida(idPartida);
+
+    if (respuesta == sala.Respuesta)
     {
-        Sala sala = BD.ObtenerSala(idSala);
-
-        if (sala == null)
+        if (idSala == 5)
         {
-            return RedirectToAction("Index", "Home");
+            BD.GanarPartida(idPartida);
+            return RedirectToAction("Victoria");
         }
 
-        if (!string.IsNullOrEmpty(respuesta) && respuesta == sala.Respuesta)
-        {
-            return RedirectToAction("Sala", new { id = idSala + 1 });
-        }
+        BD.ActualizarSalaActual(idPartida, idSala + 1);
 
-        ViewBag.Error = "Respuesta incorrecta";
-        return View("Sala", sala);
+        return RedirectToAction("Sala", new { id = idSala + 1 });
     }
+
+    BD.RestarVida(idPartida);
+
+    partida = BD.ObtenerPartida(idPartida);
+
+    if (partida.Vidas <= 0)
+    {
+        BD.PerderPartida(idPartida);
+
+        return RedirectToAction("GameOver");
+    }
+
+    ViewBag.Error = "Respuesta incorrecta. Te quedan " 
+                    + partida.Vidas + " vidas.";
+
+    return View("Sala", sala);
+}
+public IActionResult PedirPista(int idSala)
+{
+    Sala sala = BD.ObtenerSala(idSala);
+
+    List<Pista> pistas = BD.ObtenerPistas(idSala);
+
+    if (pistas.Count > 0)
+    {
+        ViewBag.Pista = pistas[0].Texto;
+    }
+    else
+    {
+        ViewBag.Pista = "No hay pistas disponibles.";
+    }
+
+    return View("Sala", sala);
+}
 }

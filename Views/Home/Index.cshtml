@@ -1,43 +1,45 @@
-﻿
-
-@{
+﻿@{
     ViewData["Title"] = "Can u escApe?";
 }
 
-<div>
+<div class="landing-page">
+    <div class="landing-hero">
+        <div class="landing-copy">
+            <p class="eyebrow">Misterio • Suspenso • Escape Room</p>
+            <h1>CAN U ESCAPE?</h1>
+            <p class="lead">
+                A está de vuelta.<br />
+                ¿Podrás escapar?
+            </p>
 
-    <h1>CAN U ESCAPE?</h1>
+            <form asp-controller="Home" asp-action="Comenzar" method="post" class="landing-form">
+                <input type="text"
+                       name="nombre"
+                       placeholder="Ingresá tu nombre" />
 
-    <p>
-        A está de vuelta.
-        ¿Podrás escapar?
-    </p>
+                <button type="submit" class="btn-sala btn-primary-sala">
+                    COMENZAR
+                </button>
+            </form>
 
-    <form asp-controller="Home" asp-action="Comenzar" method="post">
+            @if (ViewBag.Error != null)
+            {
+                <p class="error-message">@ViewBag.Error</p>
+            }
 
-        <input type="text"
-               name="nombre"
-               placeholder="Ingresá tu nombre" />
+            <div class="landing-links">
+                <a asp-controller="Home" asp-action="Historia">Historia</a>
+                <a asp-controller="Home" asp-action="Integrantes">Integrantes</a>
+            </div>
+        </div>
 
-        <button type="submit">
-            COMENZAR
-        </button>
-
-    </form>
-
-    @if (ViewBag.Error != null)
-    {
-        <p>@ViewBag.Error</p>
-    }
-
-    <br />
-
-    <a asp-controller="Home" asp-action="Historia">
-        Historia
-    </a>
-
-    <a asp-controller="Home" asp-action="Integrantes">
-        Integrantes
-    </a>
-
+        <div class="landing-visual" aria-hidden="true">
+            <div class="glow-ring"></div>
+            <div class="landing-card">
+                <span class="badge">ROOM 01</span>
+                <h2>La puerta está cerrada.</h2>
+                <p>Todo parece normal… hasta que te das cuenta de que A te está observando.</p>
+            </div>
+        </div>
+    </div>
 </div>

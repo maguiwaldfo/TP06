@@ -7,4 +7,5 @@ public class Sala
     public int Orden { get; set; }
     public string Descripcion { get; set; }
     public string Respuesta { get; set; }
+    public string Imagenes { get; set; }
 }

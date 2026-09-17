@@ -868,25 +868,11 @@ p {
 
 .victoria {
     width: 90%;
-    max-width: 850px;
-    min-height: 65vh;
+    max-width: 900px;
 
     margin: 45px auto;
-    padding: 70px 50px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
 
     background:
-        radial-gradient(
-            circle at top,
-            rgba(214, 106, 146, 0.18),
-            transparent 45%
-        ),
         linear-gradient(
             145deg,
             rgba(34, 33, 44, 0.96),
@@ -894,91 +880,63 @@ p {
         );
 
     border: 1px solid var(--border);
-    border-radius: 28px;
+    border-radius: 25px;
+
+    padding: 55px 65px;
 
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.55),
-        0 0 50px rgba(176, 74, 114, 0.08);
+        0 20px 55px rgba(0, 0, 0, 0.45),
+        0 0 50px rgba(176, 74, 114, 0.05);
+    
+    text-align: center;
 }
-
-
-.victoria::before {
-    content: "ESCAPE COMPLETED";
-
-    display: block;
-
-    margin-bottom: 20px;
-
-    color: var(--accent-strong);
-
-    font-size: 0.8rem;
-    font-weight: 800;
-
-    letter-spacing: 5px;
-}
-
 
 .victoria h1 {
-    margin: 0 0 15px;
-
-    font-size: clamp(4rem, 9vw, 7rem);
-
-    font-weight: 900;
-
-    letter-spacing: -4px;
-
     color: var(--text);
 
-    text-shadow:
-        0 0 30px rgba(214, 106, 146, 0.25),
-        0 10px 30px rgba(0, 0, 0, 0.5);
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 800;
+
+    margin-bottom: 15px;
 }
 
-
 .victoria h2 {
-    margin-bottom: 25px;
-
     color: var(--accent-strong);
 
     font-size: 1.7rem;
+    font-weight: 700;
 
     letter-spacing: 2px;
-}
+    text-transform: uppercase;
 
+    margin-bottom: 25px;
+}
 
 .victoria p {
-    max-width: 650px;
+    font-size: 1.08rem;
+    line-height: 1.9;
 
-    margin-bottom: 18px;
-
-    font-size: 1.1rem;
-
-    line-height: 1.8;
+    margin-bottom: 22px;
 }
 
-
 .victoria .mensaje-a {
-    width: 100%;
-    max-width: 600px;
+    max-width: 650px;
 
     margin: 30px auto;
-
     padding: 25px;
 
     background: rgba(176, 74, 114, 0.10);
 
     border: 1px solid rgba(214, 106, 146, 0.35);
     border-left: 5px solid var(--accent-strong);
-
     border-radius: 12px;
 
     color: var(--text);
 
-    font-size: 1.25rem;
-
+    font-size: 1.15rem;
     font-style: italic;
+    line-height: 1.8;
 }
-
 
 .victoria a {
     display: inline-block;
@@ -1000,23 +958,19 @@ p {
     border-radius: 12px;
 
     font-weight: 800;
+    letter-spacing: 0.5px;
 
-    letter-spacing: 1px;
-
-    box-shadow: 0 10px 30px rgba(176, 74, 114, 0.25);
+    box-shadow: 0 8px 25px rgba(176, 74, 114, 0.25);
 
     transition: 0.2s;
 }
-
 
 .victoria a:hover {
     color: white;
 
     transform: translateY(-3px);
 
-    filter: brightness(1.08);
-
-    box-shadow: 0 15px 35px rgba(176, 74, 114, 0.35);
+    box-shadow: 0 12px 30px rgba(176, 74, 114, 0.35);
 }
 
 
@@ -1024,113 +978,65 @@ p {
    GAME OVER
    ========================================= */
 
-/*
-   Tu GameOver tiene solamente un <div>,
-   por eso usamos esta selección.
-*/
-
-main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) {
+.game-over {
     width: 90%;
-    max-width: 800px;
-    min-height: 60vh;
+    max-width: 900px;
 
     margin: 45px auto;
-    padding: 70px 50px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
 
     background:
-        radial-gradient(
-            circle at top,
-            rgba(142, 38, 56, 0.18),
-            transparent 45%
-        ),
         linear-gradient(
             145deg,
-            rgba(30, 25, 30, 0.98),
-            rgba(13, 13, 18, 0.98)
+            rgba(34, 33, 44, 0.96),
+            rgba(23, 23, 32, 0.96)
         );
 
-    border: 1px solid rgba(142, 38, 56, 0.65);
+    border: 1px solid var(--border);
+    border-radius: 25px;
 
-    border-radius: 28px;
+    padding: 55px 65px;
 
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.65),
-        0 0 50px rgba(142, 38, 56, 0.08);
+        0 20px 55px rgba(0, 0, 0, 0.45),
+        0 0 50px rgba(176, 74, 114, 0.05);
+    
+    text-align: center;
 }
 
-
-main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) h1 {
-    margin: 0 0 10px;
-
-    font-size: clamp(4rem, 9vw, 7rem);
-
-    font-weight: 900;
-
-    letter-spacing: -4px;
-
-    color: #D35A70;
-
-    text-shadow:
-        0 0 30px rgba(142, 38, 56, 0.3),
-        0 10px 30px rgba(0, 0, 0, 0.6);
-}
-
-
-main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) h2 {
-    margin-bottom: 25px;
-
+.game-over h1 {
     color: var(--text);
 
-    font-size: 2rem;
-
-    letter-spacing: 3px;
-}
-
-
-main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) p {
-    max-width: 600px;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 800;
 
     margin-bottom: 15px;
-
-    font-size: 1.1rem;
-
-    line-height: 1.8;
 }
 
+.game-over h2 {
+    color: var(--accent-strong);
 
-main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) a {
-    display: inline-block;
-
-    min-width: 210px;
-
-    margin: 8px;
-
-    padding: 14px 25px;
-
-    color: white;
-
-    text-decoration: none;
-
-    border: 1px solid var(--border);
-    border-radius: 12px;
-
-    background: var(--card);
-
+    font-size: 1.7rem;
     font-weight: 700;
 
-    transition: 0.2s;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    margin-bottom: 25px;
 }
 
+.game-over p {
+    font-size: 1.08rem;
+    line-height: 1.9;
 
-main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) a:first-of-type {
-    margin-top: 25px;
+    margin-bottom: 22px;
+}
+
+.game-over a {
+    display: inline-block;
+
+    margin: 12px;
+
+    padding: 15px 27px;
 
     background: linear-gradient(
         135deg,
@@ -1138,19 +1044,32 @@ main > div:not(.landing-page):not(.historia-container):not(.integrantes-containe
         var(--accent-strong)
     );
 
-    border: none;
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 12px;
 
     font-weight: 800;
+    letter-spacing: 0.5px;
+
+    box-shadow: 0 8px 25px rgba(176, 74, 114, 0.25);
+
+    transition: 0.2s;
 }
 
+.game-over a:first-of-type {
+    margin-top: 25px;
+}
 
-main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) a:hover {
+.game-over a:hover {
     color: white;
 
     transform: translateY(-3px);
 
-    border-color: var(--accent-strong);
+    box-shadow: 0 12px 30px rgba(176, 74, 114, 0.35);
 }
+
 
 
 /* =========================================
@@ -1160,58 +1079,28 @@ main > div:not(.landing-page):not(.historia-container):not(.integrantes-containe
 @media (max-width: 768px) {
 
     .victoria {
-        width: 95%;
-        min-height: 60vh;
+        width: 94%;
 
-        margin: 20px auto;
+        padding: 30px 22px;
 
-        padding: 45px 22px;
+        margin: 25px auto;
     }
-
 
     .victoria h1 {
-        font-size: 3.5rem;
-
-        letter-spacing: -2px;
+        font-size: 2.5rem;
     }
 
 
-    .victoria h2 {
-        font-size: 1.3rem;
+    .game-over {
+        width: 94%;
+
+        padding: 30px 22px;
+
+        margin: 25px auto;
     }
 
-
-    .victoria .mensaje-a {
-        padding: 20px;
-
-        font-size: 1.05rem;
-    }
-
-
-    main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) {
-        width: 95%;
-        min-height: 60vh;
-
-        margin: 20px auto;
-
-        padding: 45px 22px;
-    }
-
-
-    main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) h1 {
-        font-size: 3.5rem;
-
-        letter-spacing: -2px;
-    }
-
-
-    main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) h2 {
-        font-size: 1.5rem;
-    }
-
-
-    main > div:not(.landing-page):not(.historia-container):not(.integrantes-container):not(.sala-page):not(.victoria) a {
-        width: 100%;
+    .game-over h1 {
+        font-size: 2.5rem;
     }
 
 

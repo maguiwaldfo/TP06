@@ -45,18 +45,70 @@
         </ul>
     }
 
-    @if (Model.Orden == 3)
-    {
-        <h3>Investigá la habitación de Alison</h3>
-        <ul class="sala-list">
-            <li class="sala-item">Muñeca</li>
-            <li class="sala-item">Diario</li>
-            <li class="sala-item">Fotos</li>
-            <li class="sala-item">Espejo</li>
-            <li class="sala-item">Caja</li>
-        </ul>
-    }
+  @if (Model.Orden == 3)
+{
+    <h3>Investigá la habitación de Alison</h3>
 
+    <ul class="sala-list">
+        <li class="sala-item">Muñeca</li>
+        <li class="sala-item">Diario</li>
+        <li class="sala-item">Fotos</li>
+        <li class="sala-item">Espejo</li>
+        <li class="sala-item">Caja</li>
+    </ul>
+
+    <div class="ahorcado">
+
+        <h3>Mensaje de A</h3>
+
+        <p>
+            A dejó una palabra escondida.
+            Descubrila para saber dónde buscar.
+        </p>
+
+        <div id="palabraOculta">
+            _ _ _ _ _ _
+        </div>
+
+        <div>
+            <label for="letra">Arriesgá una letra:</label>
+
+            <input id="letra"
+                   type="text"
+                   maxlength="1" />
+
+            <button type="button"
+                    class="btn-sala btn-primary-sala"
+                    onclick="ArriesgarLetra()">
+                ARRIESGAR
+            </button>
+        </div>
+
+        <div id="ChancesRestantes">
+            Intentos restantes: 10
+        </div>
+
+        <div id="mensaje"></div>
+
+        <!-- Palabra que tiene que descubrir -->
+        <input id="palabra"
+               type="hidden"
+               value="DIARIO" />
+
+        <!-- Formulario oculto para perder una vida -->
+        <form id="formPerderVida"
+              asp-controller="Juego"
+              asp-action="PerderVidaAhorcado"
+              method="post">
+
+            <input type="hidden"
+                   name="idSala"
+                   value="@Model.Id" />
+
+        </form>
+
+    </div>
+}
     @if (Model.Orden == 4)
     {
         <h3>Investigá las pistas</h3>
@@ -98,6 +150,7 @@
         </button>
 
     </form>
+    
 
     @if (ViewBag.Error != null)
     {
@@ -120,3 +173,5 @@
     </p>
 }
 </div>
+
+<script src="~/js/ahorcado.js"></script>

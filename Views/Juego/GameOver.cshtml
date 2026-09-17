@@ -2,7 +2,7 @@
     ViewData["Title"] = "Game Over";
 }
 
-<div>
+<div class="game-over">
 
     <h1>GAME OVER</h1>
 
@@ -17,15 +17,14 @@
     </p>
 
     <a asp-controller="Juego"
-       asp-action="Identificacion">
+       asp-action="Identificacion"
+       class="btn-game-over btn-primary">
         TRY AGAIN
     </a>
 
-    <br />
-    <br />
-
     <a asp-controller="Home"
-       asp-action="Index">
+       asp-action="Index"
+       class="btn-game-over btn-secondary">
         Volver al inicio
     </a>
 
